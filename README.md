@@ -24,9 +24,6 @@ minikube delete
 - Pod é a menor unidade de execução em Kubernetes
 - Pod é um ou mais containers que compartilham o mesmo IP, porta e volume
 
-![[Pasted image 20250531174833.png]]
-![[Pasted image 20250531175002.png]]
-
 ### Comandos Pods
 
 - Retornam o status dos pods
@@ -115,3 +112,6 @@ kubectl scale --replicas=3 -f .\replicaset.yaml # Pelo nome do arquivo
 kubectl scale --replicas=3 replicaset nginx # Pelo nome do ReplicaSet
 ```
 
+## Referências
+
+- https://itau.udemy.com/course/orquestracao-de-containers-com-kubernetes
