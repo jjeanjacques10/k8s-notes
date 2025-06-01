@@ -113,8 +113,8 @@ kubectl get replicasets
 - Atualizar o scale do ReplicaSet
 
 ``` bash
-kubectl scale --replicas=3 -f .\replicaset.yaml # Pelo nome do arquivo
-kubectl scale --replicas=3 replicaset nginx # Pelo nome do ReplicaSet
+kubectl scale --replicas=10 -f .\replicaset.yaml # Pelo nome do arquivo
+kubectl scale --replicas=10 replicaset nginx # Pelo nome do ReplicaSet
 ```
 
 ## Deployments
@@ -129,7 +129,7 @@ kubectl scale --replicas=3 replicaset nginx # Pelo nome do ReplicaSet
 - Cria um Deployment a partir de um arquivo de definição
 
 ``` bash
-kubectl create -f .\deployment.yaml
+kubectl create -f .\deployment.yaml --save-config --record
 ```
 
 - Lista os Deployments
@@ -148,7 +148,7 @@ kubectl get deployments
 - Consultar o histórico de rollouts
 
 ``` bash
-kubectl rollout history deployment/frontend-dp
+kubectl rollout history deployments/frontend-dp
 ```
 
 ### Estratégias de Deployments
@@ -158,10 +158,30 @@ kubectl rollout history deployment/frontend-dp
   - Irá causar downtime, pois todos os pods serão parados antes de iniciar os novos.
 - **Blue/Green**: Cria uma nova versão do aplicativo ao lado da versão atual e, em seguida, alterna o tráfego para a nova versão.
 
+``` bash
+kubectl rollout undo deployments/frontend-dp
+```
+
+- Atualizar o Deployment para uma nova imagem
+
+``` bash
+kubectl set image deployment frontend-dp frontend-container=nginx:1.18.0 --record
+# Ou atualizar o arquivo de definição e aplicar novamente
+kubectl apply -f deployments\frontend.yaml
+```
+
+### Rollback
+
 Caso tenhamos problemas iremos realizar o rollback para a versão anterior
 
 ``` bash
-kubectl rollout undo deployment/frontend-dp
+kubectl rollout undo deployments/frontend-dp
+```
+
+Retornar para uma versão específica
+
+``` bash
+kubectl rollout undo deployments/frontend-dp --to-revision=1
 ```
 
 ## Dicas
