@@ -17,9 +17,7 @@ Exemplos:
 - NodePort para acessar o serviço `frontend-svc` na porta 58002.
 - ClusterIP para comunicação interna entre serviços como `backend-svc` e `database-svc`.
 
-
 ## Acessar IP do cluster
-
 
 - Para acessar o IP do cluster, você pode usar o comando:
 
