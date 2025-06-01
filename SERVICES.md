@@ -35,4 +35,21 @@ minikube service frontend-svc --url
 - Exemplos de arquivos no projeto:
   - [`services/frontend-svc.yaml`](./services/frontend-svc.yaml)
 
+## Microserviços
 
+Para acessar os exemplos acessar a pasta [`/microsservices`](./microsservices/) e executar o comando:
+
+``` bash
+kubectl create -f .\microsservices\namespaces\vote.yaml --save-config --record
+kubectl create -f .\microsservices\deployments --save-config --record
+kubectl create -f .\microsservices\services --save-config --record
+
+kubectl get all -n vote
+```
+
+- Recuperar o endereço do serviço:
+
+``` bash
+minikube service result --url -n vote
+minikube service vote --url -n vote
+```
