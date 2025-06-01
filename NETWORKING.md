@@ -45,3 +45,25 @@ kubectl get pods -n frontend
 ```bash
 kubectl exec -it <nome-pode> -- bash
 ```
+
+Acessando a pasta `/etc/` temos o arquivo `resolv.conf`, que contém as configurações de DNS do Pod:
+
+```bash
+cat /etc/resolv.conf
+## Resolv.conf
+root@webapp-66b6769965-ft58c:/etc# cat resolv.conf 
+nameserver 10.96.0.10
+search default.svc.cluster.local svc.cluster.local cluster.local
+options ndots:5
+```
+
+## Estrutura do endereço FQDN
+
+O endereço FQDN (Fully Qualified Domain Name) é estruturado da seguinte forma:
+
+`kubernetes.default.svc.cluster.local`
+
+- `kubernetes`: Nome do serviço Kubernetes.
+- `default`: Namespace onde o serviço está localizado.
+- `svc`: Indica que é um serviço (Kind: Service).
+- `cluster.local`: Nome do cluster Kubernetes.
