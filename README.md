@@ -54,6 +54,9 @@ kubectl delete --all pods
 ## Arquivo de definição do Kubernetes
 
 - É um arquivo YAML que define o estado desejado do cluster
+- Exemplos de arquivos no projeto:
+  - [`pods/pod.yaml`](pods/pod.yaml): Exemplo de Pod simples
+  - [`pods/nginx.yaml`](pods/nginx.yaml): Pod rodando o Nginx
 
 ``` yaml
 apiVersion: v1
@@ -89,6 +92,8 @@ kubectl create -f .\pod.yaml
 
 - São recursos do Kubernetes que garantem que um número específico de réplicas de um pod esteja em execução a qualquer momento
 - Garante a alta disponibilidade e escalabilidade da aplicação
+- Exemplo de arquivo no projeto:
+  - [`replicaset/rs1.yaml`](replicaset/rs1.yaml): Exemplo de ReplicaSet
 
 **Replication Controller** vs **ReplicaSet**
 
@@ -112,6 +117,61 @@ kubectl scale --replicas=3 -f .\replicaset.yaml # Pelo nome do arquivo
 kubectl scale --replicas=3 replicaset nginx # Pelo nome do ReplicaSet
 ```
 
+## Deployments
+
+- É um recurso do Kubernetes que gerencia a criação e atualização de novas versões de aplicações
+- **rolling update**
+  - É uma estratégia de atualização que permite atualizar a aplicação sem causar downtime
+- Na criação do Deployment nós temos um replicaSet criado automaticamente
+
+### Comandos Deployments
+
+- Cria um Deployment a partir de um arquivo de definição
+
+``` bash
+kubectl create -f .\deployment.yaml
+```
+
+- Lista os Deployments
+
+``` bash
+kubectl get deployments
+```
+
+### Rollout - Versionamento
+
+- É o processo de atualização de uma aplicação em Kubernetes
+- Apartir do Deployment, é gerada uma nova revisão para caso aconteça algum problema seja possível reverter a versão anterior
+
+### Comandos Rollout
+
+- Consultar o histórico de rollouts
+
+``` bash
+kubectl rollout history deployment/frontend-dp
+```
+
+### Estratégias de Deployments
+
+- **Rolling Update**: Atualiza os pods gradualmente, garantindo que sempre haja uma versão anterior em execução. (Padrão)
+- **Recreate**: Para todos os pods antes de criar novos, causando downtime. (Não recomendado para produção)
+  - Irá causar downtime, pois todos os pods serão parados antes de iniciar os novos.
+- **Blue/Green**: Cria uma nova versão do aplicativo ao lado da versão atual e, em seguida, alterna o tráfego para a nova versão.
+
+Caso tenhamos problemas iremos realizar o rollback para a versão anterior
+
+``` bash
+kubectl rollout undo deployment/frontend-dp
+```
+
+## Dicas
+
+- Listar todos os recursos do Kubernetes
+
+``` bash
+kubectl get all
+```
+
 ## Referências
 
-- https://itau.udemy.com/course/orquestracao-de-containers-com-kubernetes
+- [Geek University - Orquestração de Containers com Kubernetes](https://itau.udemy.com/course/orquestracao-de-containers-com-kubernetes)
